@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.0.2'
 	id 'io.spring.dependency-management' version '1.1.0'
+	id 'com.google.cloud.tools.jib' version '3.3.1'
 }
 
 group = 'com.springboot3'
@@ -10,6 +11,15 @@ sourceCompatibility = '17'
 
 repositories {
 	mavenCentral()
+}
+
+jib {
+	from {
+		image = 'amazoncorretto:17-alpine'
+	}
+	to {
+		image = 'rogerfrs/spring-boot-3-demo'
+	}
 }
 
 dependencies {
