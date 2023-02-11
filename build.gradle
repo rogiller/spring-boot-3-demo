@@ -15,7 +15,17 @@ repositories {
 
 jib {
 	from {
-		image = 'amazoncorretto:17-alpine'
+		image = 'azul/zulu-openjdk:17.0.4.1'
+		platforms {
+			platform {
+				architecture = 'amd64'
+				os = 'linux'
+			}
+			platform {
+				architecture = 'arm64'
+				os = 'linux'
+			}
+		}
 	}
 	to {
 		image = 'rogerfrs/spring-boot-3-demo'
