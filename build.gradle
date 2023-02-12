@@ -32,7 +32,7 @@ jib {
 		}
 	}
 	to {
-		image = 'rogerfrs/spring-boot-3-demo'
+		image = 'public.ecr.aws/e1a6q9k7/spring-boot-3-demo'
 	}
 }
 
