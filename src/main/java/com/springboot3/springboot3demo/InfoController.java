@@ -1,7 +1,9 @@
 package com.springboot3.springboot3demo;
 
 import org.apache.commons.lang3.time.DurationFormatUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootVersion;
+import org.springframework.boot.info.BuildProperties;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,9 +12,12 @@ import java.lang.management.ManagementFactory;
 @RestController
 public class InfoController {
 
+    @Autowired
+    BuildProperties buildProperties;
+
     static final String UPTIME_DURATION_FORMAT = "d' day, 'H' hour, 'm' min, 's' sec'";
 
-    record Info (String jvmId, String jvmVersion, String jvmVendor, String springBootVersion, String uptime) {}
+    record Info (String jvmId, String jvmVersion, String jvmVendor, String springBootVersion, String uptime, BuildProperties buildProperties) {}
 
     @GetMapping("/info")
     public Info info(){
@@ -21,7 +26,8 @@ public class InfoController {
                 System.getProperty("java.version"),
                 System.getProperty("java.vm.vendor"),
                 SpringBootVersion.getVersion(),
-                getUptimeString(ManagementFactory.getRuntimeMXBean().getUptime()));
+                getUptimeString(ManagementFactory.getRuntimeMXBean().getUptime()),
+                buildProperties);
     }
 
     static String getUptimeString(long uptime) {

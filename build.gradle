@@ -13,6 +13,10 @@ repositories {
 	mavenCentral()
 }
 
+springBoot {
+	buildInfo()
+}
+
 jib {
 	from {
 		image = 'azul/zulu-openjdk:17.0.4.1'
