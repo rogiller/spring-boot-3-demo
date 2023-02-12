@@ -16,7 +16,7 @@ jobs:
       - checkout
       - run:
           name: Docker Hub Login
-          command: docker login --username rogerfrs --password $DOCKER_PASS
+          command: docker login --username rogerfrs --password $DOCKERHUB_PASSWORD
       - run:
           name: "Gradle"
           command: "./gradlew jib"
