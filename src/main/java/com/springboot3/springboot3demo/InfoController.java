@@ -17,7 +17,9 @@ public class InfoController {
 
         RuntimeMXBean mxBean = ManagementFactory.getRuntimeMXBean();
 
-        return new Info(mxBean.getName(), System.getProperty("java.version"), System.getProperty("java.vm.vendor"));
+        return new Info(mxBean.getName(),
+                System.getProperty("java.version"),
+                System.getProperty("java.vm.vendor"));
     }
 
 }
