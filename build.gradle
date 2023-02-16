@@ -33,7 +33,7 @@ jib {
 	}
 	to {
 		//TODO I'm trying to push image to ECR so I can try out AWS App Runner
-		image = 'public.ecr.aws/e1a6q9k7/spring-boot-3-demo'
+		image = '750316579923.dkr.ecr.us-west-2.amazonaws.com/spring-boot-3-demo'
 	}
 }
 
