@@ -2,6 +2,9 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
+orbs:
+  aws-cli: circleci/aws-cli@3.1.4
+
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
@@ -16,7 +19,7 @@ jobs:
       - checkout
       - run:
           name: Docker Hub Login
-          command: docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
+          command: aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/e1a6q9k7
       - run:
           name: "Gradle"
           command: "./gradlew jib"
