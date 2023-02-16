@@ -16,7 +16,7 @@ jobs:
       - checkout
       - run:
           name: Install awscli
-          command: sudo pip install awscli
+          command: apt-get update && apt-get install -y awscli
       - run:
           name: Docker Hub Login
           command: aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/e1a6q9k7
