@@ -20,8 +20,11 @@ jobs:
       - aws-cli/setup:
           profile-name: roger-aws
       - run:
-          name: Docker Hub Login
+          name: Docker ECR Login
           command: aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/e1a6q9k7
+      - run:
+          name: Docker Hub Login
+          command: docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
       - run:
           name: "Gradle"
           command: "./gradlew jib"
