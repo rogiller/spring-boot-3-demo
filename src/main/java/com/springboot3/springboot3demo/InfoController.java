@@ -35,8 +35,6 @@ public class InfoController {
                 buildProperties);
     }
 
-    //TODO something to eat memory and crash the VM
-
     @GetMapping("/users")
     public List<Map> mysql(){
 
@@ -67,6 +65,17 @@ public class InfoController {
             record.put("Error", e.getMessage());
             arrayList.add(record);
             return arrayList;
+        }
+    }
+
+    @GetMapping("/eatMemory")
+    public void eatMemory(){
+        Vector v = new Vector();
+        while (true) {
+            byte [] b  = new byte[1048576]
+            v.add(b)
+            Runtime rt = Runtime.getRuntime();
+            System.out.println("Free memory: " + rt.freeMemory());
         }
     }
 
