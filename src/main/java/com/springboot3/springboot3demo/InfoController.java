@@ -68,15 +68,22 @@ public class InfoController {
         }
     }
 
+    static Vector v = new Vector();
+
     @GetMapping("/eatMemory")
     public void eatMemory(){
-        Vector v = new Vector();
+
         while (true) {
-            byte [] b  = new byte[1048576]
-            v.add(b)
+            byte [] b  = new byte[1048576];
+            v.add(b);
             Runtime rt = Runtime.getRuntime();
             System.out.println("Free memory: " + rt.freeMemory());
         }
+    }
+
+    @GetMapping("/exit")
+    public void exit(){
+        System.exit(0);
     }
 
     static String getUptimeString(long uptime) {
