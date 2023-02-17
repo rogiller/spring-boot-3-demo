@@ -12,9 +12,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 public class InfoController {
@@ -36,10 +34,13 @@ public class InfoController {
                 getUptimeString(ManagementFactory.getRuntimeMXBean().getUptime()),
                 buildProperties);
     }
-    @GetMapping("/mysql")
-    public List<String> mysql(){
 
-        List<String> arrayList = new ArrayList<>();
+    //TODO something to eat memory and crash the VM
+
+    @GetMapping("/users")
+    public List<Map> mysql(){
+
+        List<Map> arrayList = new ArrayList<>();
 
         try {
             String dbUrl = System.getenv().get("BOOT3_DB_URL");
@@ -49,15 +50,22 @@ public class InfoController {
             Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPw) ;
             Statement stmt = conn.createStatement() ;
-            String query = "select location_code from st_biz_location order by location_code";
-            ResultSet rs = stmt.executeQuery(query) ;
+            String query = "select userprofileid, name, nickname, emailaddress from rh_userprofile order by name";
+            ResultSet rs = stmt.executeQuery(query);
             while(rs.next()){
-                arrayList.add(rs.getString(1));
+                Map<String, String> record = new LinkedHashMap<>();
+                record.put("userId", rs.getString("userprofileid"));
+                record.put("name", rs.getString("name"));
+                record.put("userName", rs.getString("nickname"));
+                record.put("email", rs.getString("emailaddress"));
+                arrayList.add(record);
             }
             return arrayList;
 
         }catch(Exception e){
-            arrayList.add(e.getMessage());
+            Map<String, String> record = new HashMap<>();
+            record.put("Error", e.getMessage());
+            arrayList.add(record);
             return arrayList;
         }
     }
