@@ -40,6 +40,7 @@ jib {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web:3.0.2'
 	implementation 'org.apache.commons:commons-lang3:3.8.1'
+	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.32'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test:3.0.2'
 }
 
