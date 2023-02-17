@@ -20,10 +20,10 @@ jobs:
       - aws-cli/setup:
           profile-name: roger-aws
       - run:
-          name: Docker ECR Login
+          name: Docker ECR Login [used to publish images]
           command: aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 750316579923.dkr.ecr.us-west-2.amazonaws.com
       - run:
-          name: Docker Hub Login
+          name: Docker Hub Login [used to pull base image]
           command: docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
       - run:
           name: "Gradle"
