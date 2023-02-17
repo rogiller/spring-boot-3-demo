@@ -22,6 +22,8 @@ public class InfoController {
 
     static final String UPTIME_DURATION_FORMAT = "d' day, 'H' hour, 'm' min, 's' sec'";
 
+    private static Vector memoryLeak = new Vector();
+
     record Info (String jvmId, String jvmVersion, String jvmVendor, String springBootVersion, String uptime, BuildProperties buildProperties) {}
 
     @GetMapping("/info")
@@ -68,14 +70,12 @@ public class InfoController {
         }
     }
 
-    static Vector v = new Vector();
-
     @GetMapping("/eatMemory")
     public void eatMemory(){
 
         while (true) {
             byte [] b  = new byte[1048576];
-            v.add(b);
+            memoryLeak.add(b);
             Runtime rt = Runtime.getRuntime();
             System.out.println("Free memory: " + rt.freeMemory());
         }
