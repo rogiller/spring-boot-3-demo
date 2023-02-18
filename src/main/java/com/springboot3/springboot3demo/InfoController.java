@@ -20,16 +20,20 @@ public class InfoController {
     @Autowired
     BuildProperties buildProperties;
 
+    private static String containerId = UUID.randomUUID().toString();
+
     static final String UPTIME_DURATION_FORMAT = "d' day, 'H' hour, 'm' min, 's' sec'";
 
     private static Vector memoryLeak = new Vector();
 
-    record Info (String jvmId, String jvmVersion, String jvmVendor, String springBootVersion, String uptime, BuildProperties buildProperties) {}
+    record Info (String containerId, String jvmId, String jvmVersion, String jvmVendor,
+                 String springBootVersion, String uptime, BuildProperties buildProperties) {}
 
     @GetMapping("/info")
     public Info info(){
 
-        return new Info( ManagementFactory.getRuntimeMXBean().getName(),
+        return new Info(containerId,
+                ManagementFactory.getRuntimeMXBean().getName(),
                 System.getProperty("java.version"),
                 System.getProperty("java.vm.vendor"),
                 SpringBootVersion.getVersion(),
