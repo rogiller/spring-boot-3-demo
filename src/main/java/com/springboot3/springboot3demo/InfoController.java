@@ -6,7 +6,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootVersion;
 import org.springframework.boot.info.BuildProperties;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.management.ManagementFactory;
@@ -14,6 +17,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @RestController
@@ -97,6 +101,37 @@ public class InfoController {
     @GetMapping("/exit")
     public void exit(){
         System.exit(0);
+    }
+
+    @GetMapping({"/fib", "/fib/", "/fib/{fib}"})
+    public ResponseEntity<Map> fibonacci(
+            @PathVariable(required = false) Long fib) {
+
+        if(fib == null){
+            fib = 1L;
+        }
+
+        LinkedHashMap<String, Object> map = new LinkedHashMap();
+
+        long start = System.currentTimeMillis();
+
+        map.put("fibonacciInput", fib);
+
+        long result = slowFibonacciCompute(fib);
+        LOG.info("Slow fibonacci result: {}", result);
+
+        map.put("fibonacciResult", result);
+        map.put("millisecondsTook", System.currentTimeMillis() - start);
+
+        return ResponseEntity.ok(map);
+    }
+
+    private Long slowFibonacciCompute(long n) {
+        if (n <= 1) {
+            return n;
+        } else {
+            return slowFibonacciCompute(n - 1) + slowFibonacciCompute(n - 2);
+        }
     }
 
     static String getUptimeString(long uptime) {
