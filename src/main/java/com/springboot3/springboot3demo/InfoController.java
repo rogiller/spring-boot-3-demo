@@ -1,6 +1,8 @@
 package com.springboot3.springboot3demo;
 
 import org.apache.commons.lang3.time.DurationFormatUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootVersion;
 import org.springframework.boot.info.BuildProperties;
@@ -17,7 +19,8 @@ import java.util.*;
 @RestController
 public class InfoController {
 
-    @Autowired
+    private static Logger LOG = LoggerFactory.getLogger(InfoController.class);
+
     BuildProperties buildProperties;
 
     private static String containerId = UUID.randomUUID().toString();
@@ -25,6 +28,12 @@ public class InfoController {
     static final String UPTIME_DURATION_FORMAT = "d' day, 'H' hour, 'm' min, 's' sec'";
 
     private static Vector memoryLeak = new Vector();
+
+    @Autowired
+    InfoController(BuildProperties buildProperties){
+        this.buildProperties = buildProperties;
+        LOG.info("VM started with containerId: " + containerId);
+    }
 
     record Info (String containerId, String jvmId, String jvmVersion, String jvmVendor,
                  String springBootVersion, String uptime, BuildProperties buildProperties) {}
@@ -81,7 +90,7 @@ public class InfoController {
             byte [] b  = new byte[1048576];
             memoryLeak.add(b);
             Runtime rt = Runtime.getRuntime();
-            System.out.println("Free memory: " + rt.freeMemory());
+            LOG.info("Free memory: " + rt.freeMemory());
         }
     }
 
