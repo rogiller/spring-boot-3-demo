@@ -115,6 +115,7 @@ public class InfoController {
 
         long start = System.currentTimeMillis();
 
+        map.put("containerId", containerId);
         map.put("fibonacciInput", fib);
 
         long result = slowFibonacciCompute(fib);

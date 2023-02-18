@@ -1,12 +1,12 @@
 config:
   target: "https://cymxqawkwj.us-west-2.awsapprunner.com"
   phases:
-    - duration: 300
-      arrivalRate: 100
+    - duration: 600
+      arrivalRate: 10
       name: Sustained load
 
 scenarios:
-  - name: "hit info"
+  - name: "hit fib"
     flow:
       - get:
-          url: "/info"
+          url: "/fib/34"
